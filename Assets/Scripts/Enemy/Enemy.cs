@@ -5,16 +5,16 @@ using Unity.Netcode;
 
 public class Enemy : NetworkBehaviour
 {
-    public int health;              //enemy health
-    public float speed;             //enemy speed
-    public float stunDuration;     //total stun time when an enemy is attacked
-    public float startStun;         //cooldown for stun
+    public int health;                  //enemy health
+    public float speed;                 //enemy speed
+    public float stunDuration;          //total stun time when an enemy is attacked
+    public float startStun;             //cooldown for stun
 
-    public Transform playerTransform;
-    public bool isChasing;
-    public float chaseDistance;
+    public Transform playerTransform;   //detect where player is located
+    public bool isChasing;              //is enemy currently chasing?
+    public float chaseDistance;         //how far the player can be before enemy begins chase
 
-    private Animator anim;
+    private Animator anim;              //attach animation controller
 
     void Start()
     {
@@ -26,12 +26,15 @@ public class Enemy : NetworkBehaviour
     {
         if (isChasing)
         {
+            //determine if enemy should be facing left or right if chasing player
+            //player is to enemy's right
             if (transform.position.x > playerTransform.position.x)
             {
                 transform.localScale = new Vector3(1, 1, 1);
                 transform.position += Vector3.left * speed * Time.deltaTime;
             }
 
+            //player is to enemy's left
             if (transform.position.x < playerTransform.position.x)
             {
                 transform.localScale = new Vector3(-1, 1, 1);
@@ -40,13 +43,14 @@ public class Enemy : NetworkBehaviour
         }
         else
         {
+            //if player is within our determined chaseDistance, chase the player
             if (Vector2.Distance(transform.position, playerTransform.position) < chaseDistance)
             {
                 isChasing = true;
             }
         }
 
-        //When enemy takes damage
+        //when enemy takes damage
         if (stunDuration <= 0)      //check if stun is still in effect
         {
             speed = 5;              //enemy will maintain normal speed
@@ -67,9 +71,9 @@ public class Enemy : NetworkBehaviour
 
     public void TakeDamage(int damage)  //method for enemy to take damage
     {
-        anim.SetBool("damaged", true);
-        stunDuration = startStun;
-        health -= damage;           //decrease health when player attacks
-        Debug.Log("damage taken");  //check if enemy is successfully taking damage
+        anim.SetBool("damaged", true);  //set off damage animation
+        stunDuration = startStun;       //reset stun duration
+        health -= damage;               //decrease health when player attacks
+        Debug.Log("damage taken");      //check if enemy is successfully taking damage
     }
 }
