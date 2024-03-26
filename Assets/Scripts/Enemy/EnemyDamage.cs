@@ -7,29 +7,33 @@ public class EnemyDamage : NetworkBehaviour
 {
     public int damage; //determines how much damage the enemy does
 
-    //allow script to access player scripts
+    [Header ("Access Scripts")]
     public PlayerHealth playerHealth;
     public PlayerMovement playerMovement;
-
-    //access enemy script
     public Enemy enemy;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")   //if enemy collides with a player
         {
-            enemy.stunDuration = 3; //stun the enemy when it collides with player
+            enemy.stunDuration = 3; //stun the enemy
 
-            playerMovement.kbCounter = playerMovement.kbTotalTime;  //knockback player
+            //knockback player
+            playerMovement.kbCounter = playerMovement.kbTotalTime;
+            //detect if collision was from left or right
+
+            //if from left, knock player right
             if (collision.transform.position.x <= transform.position.x)
             {
                 playerMovement.kbRight = true;
             }
+
+            //if from right, knock player left
             if (collision.transform.position.x > transform.position.x)
             {
                 playerMovement.kbRight = false;
             }
-            playerHealth.TakeDamage(damage);                        //make player take damage
+            playerHealth.TakeDamage(damage);                        //call player's take damage method
         }
     }
 }
