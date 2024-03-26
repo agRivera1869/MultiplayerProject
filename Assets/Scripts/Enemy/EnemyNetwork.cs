@@ -5,14 +5,6 @@ using Unity.Netcode;
 
 public class EnemyNetwork : NetworkBehaviour
 {
-    private readonly NetworkVariable<Vector3> _netPos = new(writePerm: NetworkVariableWritePermission.Owner);
-    private readonly NetworkVariable<Vector3> _netScale = new(writePerm: NetworkVariableWritePermission.Owner);
-    void Update()
-    {
-        transform.position = _netPos.Value;
-        transform.localScale = _netScale.Value;
-    }
-
     struct EnemyNetworkData
     {
         private float _x, _y;
