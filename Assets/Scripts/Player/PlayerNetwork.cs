@@ -9,11 +9,13 @@ public class PlayerNetwork : NetworkBehaviour
     private readonly NetworkVariable<Vector3> _netScale = new(writePerm: NetworkVariableWritePermission.Owner);
     void Update()
     {
+        //if player controls this object
         if (IsOwner)
         {
             _netPos.Value = transform.position;
             _netScale.Value = transform.localScale;
         }
+        //if they dont
         else
         {
             transform.position = _netPos.Value;
@@ -23,9 +25,10 @@ public class PlayerNetwork : NetworkBehaviour
 
     struct PlayerNetworkData
     {
-        private float _x, _y;
-        private short _xScale;
+        private float _x, _y;   //track x and y position
+        private short _xScale;  //check x scale for flipping sprite
 
+        //update position on the x and y axis
         internal Vector3 Position
         {
             get => new Vector3(_x, _y, 0);
@@ -35,7 +38,7 @@ public class PlayerNetwork : NetworkBehaviour
                 _y = value.y;
             }
         }
-
+        //update scale on the x axis
         internal Vector3 Scale
         {
             get => new Vector3(_xScale, 1, 1);
