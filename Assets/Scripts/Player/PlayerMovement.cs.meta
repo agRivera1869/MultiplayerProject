@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 94ea0d8820dc26e4b897fc0d9e0461fe
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - rb: {instanceID: 0}
+  - groundCheck: {instanceID: 0}
+  - walk: {fileID: 8300000, guid: 5eae38c5295e59244a6b421bb63515e3, type: 3}
+  - jump: {fileID: 8300000, guid: f3c9c017ec7366246b5b167fcacae459, type: 3}
+  - attack: {fileID: 8300000, guid: 9509c1095b3217347ab93940f6ada185, type: 3}
+  - attackPos: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
